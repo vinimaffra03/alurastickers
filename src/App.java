@@ -1,4 +1,7 @@
+
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -23,6 +26,17 @@ public class App {
 
         // exibir e manipular os dados 
         for (Map<String,String> filme : listaDeFilmes) {
+
+            // gerador de imagens com input stream
+            String urlImagem = filme.get("image");
+            String titulo = filme.get("title");
+
+            InputStream inputStream = new URL(urlImagem).openStream();
+            String nomeArquivo = (titulo + ".png");
+
+            var geradora = new GeradoraDeFigurinhas();
+            geradora.cria(inputStream, nomeArquivo);
+
             System.out.println("\u001B[0m" + filme.get("image"));
             System.out.println();
             System.out.println("\u001B[0m" + filme.get("title"));
